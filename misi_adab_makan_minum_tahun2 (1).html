@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Misi Adab Makan dan Minum</title>
+<style>
+:root{--purple:#7654a8;--deep:#49336e;--pink:#ffe5ef;--lav:#eee7ff;--yellow:#fff2bd;--mint:#dcf5e9;--ink:#332b3d;--white:#fff}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Trebuchet MS",Arial,sans-serif;color:var(--ink);background:linear-gradient(135deg,#fff4f8,#f2edff 55%,#fff8dc);min-height:100vh}
+button{font:inherit;cursor:pointer;border:0}
+.wrap{max-width:920px;margin:auto;padding:22px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-weight:900;color:var(--deep);letter-spacing:.4px}
+.score{background:white;border:2px solid #e6dcfa;border-radius:30px;padding:9px 16px;font-weight:800}
+.hero{margin:22px 0;background:linear-gradient(120deg,#7654a8,#a27acb);color:white;border-radius:28px;padding:28px;text-align:center;box-shadow:0 12px 30px #6b4d8c25}
+.hero .emoji{font-size:52px}
+.hero h1{font-size:clamp(28px,5vw,44px);margin:8px 0}
+.hero p{margin:8px auto;max-width:600px;line-height:1.6}
+.tag{display:inline-block;background:#fff2bd;color:#59442b;padding:7px 13px;border-radius:20px;font-weight:800;font-size:13px}
+.panel{background:#fff;border:2px solid #eee7ff;border-radius:24px;padding:24px;box-shadow:0 8px 24px #57417612}
+.hidden{display:none!important}
+h2{color:var(--deep);margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:13px;margin-top:18px}
+.mission{background:#faf7ff;border:2px solid #e9e0fa;border-radius:18px;padding:17px;text-align:left;min-height:130px;transition:.2s}
+.mission:hover{transform:translateY(-3px);border-color:#a78bd4}
+.mission b{display:block;color:var(--deep);margin:8px 0}
+.mission span{font-size:30px}
+.primary,.secondary{padding:12px 20px;border-radius:14px;font-weight:800;margin-top:12px}
+.primary{background:var(--purple);color:white}
+.primary:hover{background:var(--deep)}
+.secondary{background:var(--lav);color:var(--deep)}
+.question{font-size:21px;font-weight:800;line-height:1.45;margin:12px 0 18px}
+.options{display:grid;gap:11px}
+.option{padding:14px 16px;text-align:left;border:2px solid #e8e0f3;border-radius:15px;background:#fff;line-height:1.4}
+.option:hover{background:#faf6ff;border-color:#aa91d4}
+.option:disabled{cursor:default;opacity:1}
+.option.correct{background:#e2f7eb;border-color:#4ca978}
+.option.wrong{background:#fff0ef;border-color:#df7770}
+.feedback{padding:13px 15px;border-radius:14px;margin-top:14px;line-height:1.5;font-weight:700}
+.good{background:var(--mint);color:#246442}
+.bad{background:#fff0ef;color:#8b3e38}
+.progress{height:10px;background:#eee8f5;border-radius:20px;overflow:hidden;margin:16px 0}
+.bar{height:100%;background:#9a7bc9;width:0%;transition:.3s}
+.meta{display:flex;justify-content:space-between;color:#71677c;font-size:14px;font-weight:700}
+.small{font-size:14px;color:#756b80;line-height:1.6}
+.result{text-align:center;padding:15px}
+.result .big{font-size:60px}
+.result h2{font-size:30px}
+.pill{display:inline-block;background:var(--yellow);padding:7px 12px;border-radius:20px;font-weight:800;margin:4px}
+footer{text-align:center;color:#81758f;font-size:12px;padding:22px}
+@media(max-width:560px){.wrap{padding:14px}.hero{padding:22px 16px}.panel{padding:18px}.question{font-size:18px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand">🌙 SANTAI BERSAMA USTAZAH</div>
+    <div class="score">⭐ Mata: <span id="score">0</span></div>
+  </div>
+
+  <section class="hero" id="home">
+    <div class="emoji">🍽️ 🥛</div>
+    <span class="tag">PENDIDIKAN ISLAM • TAHUN 2</span>
+    <h1>Misi Adab Makan dan Minum</h1>
+    <p>Jom bantu Amirah dan Balqis belajar adab makan dan minum. Selesaikan 5 misi dan kumpulkan bintang!</p>
+    <button class="primary" onclick="showMissions()">Mula Bermain ✨</button>
+  </section>
+
+  <section class="panel hidden" id="missions">
+    <h2>🗺️ Pilih Misi Kamu</h2>
+    <p class="small">Selesaikan semua misi untuk menjadi <b>Juara Adab</b>!</p>
+    <div class="grid">
+      <button class="mission" onclick="startMission(0)"><span>🍎</span><b>Misi 1: Kenali Adab</b><small>Pilih amalan yang betul.</small></button>
+      <button class="mission" onclick="startMission(1)"><span>✅</span><b>Misi 2: Betul atau Salah</b><small>Nilai perlakuan Amirah.</small></button>
+      <button class="mission" onclick="startMission(2)"><span>🔢</span><b>Misi 3: Susun Adab</b><small>Ingat amalan sebelum dan selepas makan.</small></button>
+      <button class="mission" onclick="startMission(3)"><span>💬</span><b>Misi 4: Situasi Amirah</b><small>Bantu Amirah membuat pilihan.</small></button>
+      <button class="mission" onclick="startMission(4)"><span>🏆</span><b>Misi 5: Cabaran Akhir</b><small>Uji pengetahuan kamu!</small></button>
+    </div>
+    <button class="secondary" onclick="showHome()">Kembali ke halaman utama</button>
+  </section>
+
+  <section class="panel hidden" id="game">
+    <div class="meta"><span id="missionName">Misi</span><span id="counter">Soalan 1/5</span></div>
+    <div class="progress"><div class="bar" id="bar"></div></div>
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div id="feedback" aria-live="polite"></div>
+    <button class="primary hidden" id="next" onclick="nextQuestion()">Seterusnya ➜</button>
+    <button class="secondary" onclick="showMissions()">Keluar ke senarai misi</button>
+  </section>
+
+  <section class="panel hidden result" id="result">
+    <div class="big" id="resultEmoji">🌟</div>
+    <h2 id="resultTitle">Tahniah!</h2>
+    <p id="resultText"></p>
+    <div id="resultBadge"></div>
+    <button class="primary" onclick="showMissions()">Pilih misi seterusnya</button>
+    <button class="secondary" onclick="showHome()">Halaman utama</button>
+  </section>
+
+  <section class="panel hidden" id="finish">
+    <div class="result">
+      <div class="big">🏆🌙</div>
+      <h2>Tahniah, Juara Adab!</h2>
+      <p>Kamu telah menyelesaikan semua misi. Terus amalkan adab makan dan minum dalam kehidupan seharian.</p>
+      <div class="pill">Baca doa</div><div class="pill">Guna tangan kanan</div><div class="pill">Tidak membazir</div><div class="pill">Bersyukur</div>
+      <p><b>Ingat!</b> Ilmu yang baik perlu diamalkan setiap hari.</p>
+      <button class="primary" onclick="restart()">Main semula 🔄</button>
+    </div>
+  </section>
+  <footer>Dibina untuk pembelajaran Pendidikan Islam Tahun 2 • Santai Bersama Ustazah</footer>
+</div>
+<script>
+const missions = [
+ {name:"Misi 1: Kenali Adab",items:[
+  ["Apakah yang perlu kita lakukan sebelum makan?",["Basuh tangan dan baca doa","Terus makan dengan cepat","Bermain dahulu"],0,"Basuh tangan dan baca doa membantu kita menjaga kebersihan serta mengingati Allah."],
+  ["Kita digalakkan makan dan minum menggunakan tangan…",["Kiri","Kanan","Kedua-duanya serentak"],1,"Betul! Kita makan dan minum menggunakan tangan kanan."],
+  ["Apabila mengambil makanan, kita hendaklah…",["Mengambil makanan yang dekat dengan kita","Berebut makanan kawan","Mengambil semua makanan"],0,"Ya! Ambil makanan yang dekat dengan kita dan jangan berebut."],
+  ["Apakah cara mengelakkan pembaziran?",["Membuang lebihan makanan","Mengambil makanan terlalu banyak","Mengambil sekadar yang mampu dihabiskan"],2,"Bagus! Ambil sedikit dahulu dan tambah jika masih lapar."],
+  ["Jika tidak suka sesuatu makanan, kita patut…",["Mencela makanan itu","Diam dan tidak mencelanya","Mengajak kawan membencinya"],1,"Betul! Jangan mencela makanan. Jika tidak suka, diam sahaja dan tidak perlu memakannya."]
+ ]},
+ {name:"Misi 2: Betul atau Salah",items:[
+  ["Amirah membasuh tangan sebelum makan. Betul atau salah?",["Betul","Salah"],0,"Bagus! Membasuh tangan ialah amalan yang baik sebelum makan."],
+  ["Balqis bercakap ketika mulutnya penuh dengan makanan.",["Betul","Salah"],1,"Ya, salah. Kita makan dengan tertib dan tidak bercakap ketika mulut penuh."],
+  ["Amirah makan secara sederhana dan perlahan.",["Betul","Salah"],0,"Betul! Makan secara sederhana dan perlahan ialah adab yang baik."],
+  ["Balqis mengambil makanan banyak walaupun tidak mampu menghabiskannya.",["Betul","Salah"],1,"Tepat! Kita tidak boleh membazir. Ambil makanan mengikut kemampuan."],
+  ["Selepas makan, kita membaca doa dan bersyukur kepada Allah.",["Betul","Salah"],0,"Betul! Kita membaca doa selepas makan dan bersyukur atas rezeki Allah."]
+ ]},
+ {name:"Misi 3: Susun Adab",items:[
+  ["Apakah amalan yang dilakukan sebelum mula makan?",["Membaca doa selepas makan","Membasuh tangan dan membaca doa sebelum makan","Terus meninggalkan meja"],1,"Betul! Bersihkan tangan dan baca doa sebelum makan."],
+  ["Pilih tindakan yang sesuai ketika makan.",["Makan dengan tangan kanan","Berebut makanan","Mencela makanan"],0,"Bagus! Gunakan tangan kanan ketika makan."],
+  ["Makanan yang patut diambil ialah…",["Semua makanan di atas meja","Makanan yang dekat dengan kita","Makanan yang dipegang oleh kawan"],1,"Ya! Ambil makanan yang dekat dengan kita."],
+  ["Apakah yang perlu dibuat selepas selesai makan?",["Membaca doa selepas makan","Terus berlari","Mengejek makanan"],0,"Betul! Akhiri makan dengan membaca doa dan memuji Allah."],
+  ["Jika terlupa membaca doa pada awal makan, apakah yang boleh dibaca?",["Alhamdulillah sahaja","Bismillahi awwalahu wa akhirahu","Subhanallah wabihamdih"],1,"Bagus! Baca: Bismillahi awwalahu wa akhirahu."]
+ ]},
+ {name:"Misi 4: Situasi Amirah",items:[
+  ["Amirah sangat lapar lalu terus makan tanpa membasuh tangan. Apakah nasihat terbaik?",["Basuh tangan sebelum makan","Makan lebih cepat","Tidak perlu buat apa-apa"],0,"Nasihat yang baik ialah membasuh tangan sebelum makan."],
+  ["Amirah tidak suka lauk yang disediakan. Apakah tindakan paling beradab?",["Mengatakan lauk itu tidak sedap","Mencampakkan lauk","Tidak mencela makanan"],2,"Betul! Kita tidak mencela makanan walaupun tidak menyukainya."],
+  ["Balqis melihat Amirah mengambil makanan terlalu banyak. Apakah cadangan terbaik?",["Ambil sekadar yang mampu dihabiskan","Ambil lagi supaya nampak banyak","Biarkan makanan tidak habis"],0,"Tepat! Ambil mengikut kemampuan untuk mengelakkan pembaziran."],
+  ["Kawan Amirah bercakap ketika mulutnya penuh. Apakah nasihat yang sesuai?",["Teruskan bercakap","Habiskan makanan dahulu sebelum bercakap","Bercakap dengan lebih kuat"],1,"Bagus! Jangan bercakap ketika mulut penuh."],
+  ["Amirah selesai makan. Bagaimanakah dia menunjukkan rasa syukur?",["Membaca doa selepas makan","Mengeluh tentang makanan","Membazirkan air"],0,"Ya! Membaca doa selepas makan ialah salah satu cara bersyukur."]
+ ]},
+ {name:"Misi 5: Cabaran Akhir",items:[
+  ["Mengapakah kita membaca doa sebelum makan?",["Untuk mendapat keberkatan daripada Allah","Supaya makanan menjadi lebih banyak","Supaya cepat kenyang"],0,"Betul! Kita memohon keberkatan Allah terhadap rezeki."],
+  ["Mengapakah kita perlu membasuh tangan sebelum makan?",["Supaya tangan kelihatan cantik sahaja","Untuk menjaga kesihatan dan kebersihan","Supaya boleh makan dengan cepat"],1,"Ya! Tangan yang bersih membantu mengurangkan kuman."],
+  ["Apakah kaitan makan secara sederhana dengan kesihatan?",["Membantu mengelakkan ketidakselesaan seperti sakit perut","Menyebabkan kita sentiasa lapar","Tidak mempunyai kaitan"],0,"Bagus! Makan secara sederhana membantu menjaga kesihatan."],
+  ["Apakah pengajaran Surah al-A'raf ayat 31 tentang makan dan minum?",["Makan sebanyak mungkin","Makan dan minum tetapi jangan berlebih-lebihan","Tidak boleh makan makanan yang sedap"],1,"Tepat! Allah mengingatkan kita supaya tidak berlebih-lebihan."],
+  ["Mengapakah kita mengamalkan adab makan seperti yang diajarkan Rasulullah SAW?",["Untuk mencontohi akhlak Rasulullah SAW","Untuk mendapat pujian kawan sahaja","Supaya tidak perlu membaca doa"],0,"Betul! Mengamalkan adab makan ialah usaha mencontohi akhlak Rasulullah SAW."]
+ ]}
+];
+let score=0, currentMission=0, qIndex=0, answered=false, completed=new Set();
+const $=id=>document.getElementById(id);
+function hideAll(){["home","missions","game","result","finish"].forEach(x=>$(x).classList.add("hidden"))}
+function showHome(){hideAll();$("home").classList.remove("hidden")}
+function showMissions(){hideAll();$("missions").classList.remove("hidden");if(completed.size===5){$("finish").classList.remove("hidden");$("missions").classList.add("hidden")}}
+function showMissionsOrFinish(){showMissions()}
+function startMission(i){currentMission=i;qIndex=0;hideAll();$("game").classList.remove("hidden");renderQuestion()}
+function renderQuestion(){
+ answered=false;const m=missions[currentMission],item=m.items[qIndex];
+ $("missionName").textContent=m.name;$("counter").textContent=`Soalan ${qIndex+1}/${m.items.length}`;
+ $("bar").style.width=`${qIndex/m.items.length*100}%`;$("question").textContent=item[0];
+ $("feedback").innerHTML="";$("next").classList.add("hidden");$("options").innerHTML="";
+ item[1].forEach((answer,i)=>{const b=document.createElement("button");b.className="option";b.textContent=String.fromCharCode(65+i)+". "+answer;b.onclick=()=>choose(i,b);$("options").appendChild(b)});
+}
+function choose(i,button){
+ if(answered)return;answered=true;const item=missions[currentMission].items[qIndex],correct=i===item[2];
+ [...$("options").children].forEach((b,index)=>{b.disabled=true;if(index===item[2])b.classList.add("correct");else if(index===i)b.classList.add("wrong")});
+ if(correct){score+=10;$("score").textContent=score;$("feedback").innerHTML=`<div class="feedback good">🌟 Betul! +10 mata<br>${item[3]}</div>`}
+ else{$("feedback").innerHTML=`<div class="feedback bad">💡 Cuba ingat semula!<br>${item[3]}</div>`}
+ $("bar").style.width=`${(qIndex+1)/missions[currentMission].items.length*100}%`;
+ $("next").textContent=qIndex===missions[currentMission].items.length-1?"Lihat keputusan ➜":"Soalan seterusnya ➜";$("next").classList.remove("hidden");
+}
+function nextQuestion(){
+ if(!answered)return;
+ if(qIndex<missions[currentMission].items.length-1){qIndex++;renderQuestion();return}
+ completed.add(currentMission);hideAll();$("result").classList.remove("hidden");
+ const correctCount=missions[currentMission].items.reduce((n,item)=>n,0);
+ $("resultEmoji").textContent="🌟";$("resultTitle").textContent="Misi selesai!";
+ $("resultText").textContent=`Kamu telah menamatkan ${missions[currentMission].name}. Teruskan usaha untuk mengumpul lebih banyak ilmu dan mata!`;
+ $("resultBadge").innerHTML=`<span class="pill">⭐ Jumlah mata: ${score}</span><span class="pill">🎯 Misi selesai: ${completed.size}/5</span>`;
+ if(completed.size===5){$("resultTitle").textContent="Semua misi selesai!";$("resultText").textContent="Hebat! Kamu sudah menyelesaikan kelima-lima misi. Tekan butang di bawah untuk melihat penghargaan."; $("resultEmoji").textContent="🏆"}
+}
+function restart(){score=0;currentMission=0;qIndex=0;completed.clear();$("score").textContent="0";showHome()}
+showHome();
+</script>
+</body>
+</html>
